@@ -10,4 +10,9 @@
 
 @interface PiecePickerViewController : UIViewController
 
+@property (nonatomic, strong) UIImageView *pieceImg_1;
+@property (nonatomic, strong) UIImageView *pieceImg_2;
+@property (nonatomic, strong) UIImageView *pieceImg_3;
+@property (nonatomic, strong) NSMutableArray *arrayOfPieces;
+
 @end

@@ -15,6 +15,11 @@
 
 #define kKeyForPiece            @"pieces"
 
+#define kImageKeyForPiece       @"piece"
+#define kImageKeyForPiece_end   @"piece_end"
+#define kImageKeyForPiece_start @"piece_start"
+
+
 #define RAMDOM(a, b) ((arc4random() % (b - a)) + a)
 
 @implementation PieceGenerator
@@ -68,15 +73,24 @@ static  PieceGenerator *_instance = nil;
     
     UIGraphicsBeginImageContext(CGSizeMake([kSizeBoard floatValue], [kSizeBoard floatValue]));
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    for (NSString *value in [[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0]) {
-        
+
+    for (int i = 0; i < [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] count]; i++)
+    {
+        NSString *value = [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] objectAtIndex:i];
         CGPoint point = CGPointFromString(value);
-        
+        NSLog(@"I : %i total : %i", i, [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] count]);
         NSLog(@"X : %f Y : %f", point.x, point.y);
-        
-        [self addImageToContext:context withImage:[UIImage imageNamed:@"piece_160x160"] atPosition:CGPointMake(point.x, point.y)];
-        
+        if (i == 0) {
+            [self addImageToContext:context withImage:[UIImage imageNamed:kImageKeyForPiece_start] atPosition:CGPointMake(point.x, point.y)];
+        }
+        else if (i == [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] count] - 1)
+        {
+            [self addImageToContext:context withImage:[UIImage imageNamed:kImageKeyForPiece_end] atPosition:CGPointMake(point.x, point.y)];
+        }
+        else
+        {
+            [self addImageToContext:context withImage:[UIImage imageNamed:kImageKeyForPiece] atPosition:CGPointMake(point.x, point.y)];
+        }
         NSLog(@"value : %@", value);
         if (maxWidth < point.y) {
             maxWidth = point.y;
@@ -113,14 +127,14 @@ static  PieceGenerator *_instance = nil;
 
 #pragma mark - Fill Array with Pieces combination
 
-- (void)fillArray:(NSMutableArray **)array limit:(NSInteger)lim {
+- (void)fillArray:(NSMutableArray *)array limit:(NSInteger)lim {
     // We filter
     NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:_arrayPieces];
-    [filteredArray removeObjectsInArray:*array];
-    DLog(@"Array filtered %@", filteredArray);
+    [filteredArray removeObjectsInArray:array];
+   // DLog(@"Array filtered %@", filteredArray);
     
     // We add as much pieces as needed
-    int end = lim - [*array count];
+    int end = lim - [array count];
     for (int i = 0 ; i < end ; i++) {
         NSDictionary *piece = [self ramdomPiecesInArray:filteredArray];
         [filteredArray removeObject:piece];
@@ -131,8 +145,9 @@ static  PieceGenerator *_instance = nil;
         p.pieceDict = piece;
         p.piecePos = 0;
 
-        [*array addObject:p];
+        [array addObject:p];
     }
+     DLog(@"array : %@", array);
 }
 
 #pragma mark - Random Pieces in array

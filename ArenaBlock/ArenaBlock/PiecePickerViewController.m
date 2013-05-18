@@ -16,59 +16,120 @@
 
 @implementation PiecePickerViewController
 
+@synthesize pieceImg_1, pieceImg_2, pieceImg_3, arrayOfPieces;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor greenColor]];
-    NSMutableArray *arrayP = [NSMutableArray array];
-    [[PieceGenerator sharedInstance] fillArray:&arrayP limit:3];
     
-    NSLog(@"arrayP : %@", arrayP);
+    arrayOfPieces = [NSMutableArray array];
     
-    UIButton *piece_0 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [piece_0 addTarget:self
-               action:@selector(aMethod:)
-     forControlEvents:UIControlEventTouchDown];
-    [piece_0 setTitle:@"Show View" forState:UIControlStateNormal];
-    [piece_0 setBackgroundImage:((Piece *)[arrayP objectAtIndex:0]).pieceImage forState:UIControlStateNormal];
-    piece_0.tag = 1;
+    [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
+    
+//    arrayOfPieces = [[NSMutableArray alloc] initWithArray:arrayP];
 
-    [[piece_0 imageView] setContentMode: UIViewContentModeScaleAspectFit];
-
-    piece_0.frame = CGRectMake(0, 0, 50, 50);
-    [self.view addSubview:piece_0];
     
-    UIButton *piece_1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [piece_1 addTarget:self
-                action:@selector(aMethod:)
-      forControlEvents:UIControlEventTouchDown];
-    [piece_1 setContentMode:UIViewContentModeScaleAspectFit];
-    piece_1.tag = 1;
-    [piece_1 setBackgroundImage:((Piece *)[arrayP objectAtIndex:1]).pieceImage forState:UIControlStateNormal];
-
-    [piece_1 setTitle:@"Show View" forState:UIControlStateNormal];
-    piece_1.frame = CGRectMake(60, 0, 50, 50);
-    [self.view addSubview:piece_1];
+   pieceImg_1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    pieceImg_1.userInteractionEnabled = YES;
+    [pieceImg_1 setBackgroundColor:[UIColor blueColor]];
+    pieceImg_1.tag = 0;
+    [pieceImg_1 setContentMode:UIViewContentModeScaleAspectFit];
     
-    UIButton *piece_2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [piece_2 addTarget:self
-                action:@selector(aMethod:)
-      forControlEvents:UIControlEventTouchDown];
-    [piece_2 setContentMode:UIViewContentModeScaleAspectFit];
-    [piece_2 setTitle:@"Show View" forState:UIControlStateNormal];
-    [piece_2 setBackgroundImage:((Piece *)[arrayP objectAtIndex:2]).pieceImage forState:UIControlStateNormal];
-    piece_2.frame = CGRectMake(120, 0, 50, 50);
-    piece_2.tag = 2;
-
-    [self.view addSubview:piece_2];
     
-	// Do any additional setup after loading the view.
+    pieceImg_2 = [[UIImageView alloc] initWithFrame:CGRectMake(60, 0, 50, 50)];
+    [pieceImg_2 setBackgroundColor:[UIColor darkGrayColor]];
+    pieceImg_2.userInteractionEnabled = YES;
+    pieceImg_2.tag = 1;
+    [pieceImg_2 setContentMode:UIViewContentModeScaleAspectFit];
+
+    
+    pieceImg_3 = [[UIImageView alloc] initWithFrame:CGRectMake(120, 0, 50, 50)];
+    [pieceImg_3 setContentMode:UIViewContentModeScaleAspectFit];
+    [pieceImg_3 setBackgroundColor:[UIColor yellowColor]];
+    pieceImg_3.userInteractionEnabled = YES;
+    pieceImg_3.tag = 2;
+
+    [pieceImg_1 setImage:((Piece *)[arrayOfPieces objectAtIndex:0]).pieceImage];
+    [pieceImg_2 setImage:((Piece *)[arrayOfPieces objectAtIndex:1]).pieceImage];
+    [pieceImg_3 setImage:((Piece *)[arrayOfPieces objectAtIndex:2]).pieceImage];
+
+    [self.view addSubview:pieceImg_1];
+    [self.view addSubview:pieceImg_2];
+    [self.view addSubview:pieceImg_3];
+    
+    
+    UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+//    UITapGestureRecognizer *tap_11 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(play:)];
+
+    UITapGestureRecognizer *tap_2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+
+    UITapGestureRecognizer *tap_3 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
+
+    [tap_1 setNumberOfTapsRequired:1];
+    [tap_1 setNumberOfTouchesRequired:1];
+    
+    [tap_2 setNumberOfTapsRequired:1];
+    [tap_2 setNumberOfTouchesRequired:1];
+
+    [tap_3 setNumberOfTapsRequired:1];
+    [tap_3 setNumberOfTouchesRequired:1];
+    
+    [pieceImg_1 addGestureRecognizer:tap_1];
+    [pieceImg_2 addGestureRecognizer:tap_2];
+    [pieceImg_3 addGestureRecognizer:tap_3];
+
+    
+}
+
+- (void)play:(UIGestureRecognizer *)sender
+{
+    NSInteger index = sender.view.tag;
+    Piece *p = ((Piece *)[arrayOfPieces objectAtIndex:index]);
+    
+    
+}
+
+- (void)rotate:(UIGestureRecognizer *)sender
+{
+    NSInteger index = sender.view.tag;
+    
+    Piece *p = ((Piece *)[arrayOfPieces objectAtIndex:index]);
+    
+    [self setPositionOfPiece:p currentPos:p.piecePos];
+    
+    static    float degrees = 90; 
+
+    switch (sender.view.tag) {
+        case 0:
+            pieceImg_1.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            break;
+        case 1:
+            pieceImg_2.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            break;
+        case 2:
+            pieceImg_3.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            break;
+        default:
+            break;
+    }
+    
+    degrees += 90;
+}
+
+- (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos
+{
+    if (currentPos != 3) {
+        [p setPiecePos:++currentPos];
+    }
+    else {
+        [p setPiecePos:0];
+    }
 }
 
 -(void)handleTap
 {
-    
     
 //    [(UIGestureRecognizer *)sender view].tag
 

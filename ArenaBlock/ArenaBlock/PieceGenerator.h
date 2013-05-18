@@ -14,7 +14,7 @@
 
 + (PieceGenerator *)sharedInstance;
 
-- (void)fillArray:(NSMutableArray **)array limit:(NSInteger)lim;
+- (void)fillArray:(NSMutableArray *)array limit:(NSInteger)lim;
 - (UIImage *)createPieceGenerator:(NSDictionary *)pieceCoordonates;
 
 @end
