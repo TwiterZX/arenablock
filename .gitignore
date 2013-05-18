@@ -1,11 +1,3 @@
-# Xcode OLD
-
-*.xcworkspace
-!default.xcworkspace
-.idea/
-profile
-
-
 #########################
 # .gitignore file for Xcode4 / OS X Source projects
 #
@@ -163,4 +155,3 @@ xcuserdata
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
-# ...none. Everything is now explained.
