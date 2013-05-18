@@ -22,6 +22,9 @@
     [super viewDidLoad];
     
     gridView.gridDelegate = self;
+    
+    // Init player
+    player1 = [[Player alloc] initWithDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,6 +58,12 @@
 - (void)imageInADBGridView:(ADBGridView *)gridView longPressImageView:(ADBImageView *)imageView
 {
     DLog(@"Long press on image");
+}
+
+#pragma mark - Sprite Layer Protocol
+
+- (UIView *)viewForPlayer:(Player *)p {
+    return self.view;
 }
 
 @end
