@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PiecePickerViewController : UIViewController
+@interface PiecePickerViewController : UIViewController <UIGestureRecognizerDelegate>
+
+@property CGFloat degrees_1;
+@property CGFloat degrees_2;
+@property CGFloat degrees_3;
 
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_1;
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_2;

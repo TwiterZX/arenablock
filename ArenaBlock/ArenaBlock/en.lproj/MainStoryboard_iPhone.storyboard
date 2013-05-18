@@ -101,11 +101,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rXF-Le-S3u" secondAttribute="trailing" constant="13" id="Ji2-5a-LEk"/>
                             <constraint firstItem="rXF-Le-S3u" firstAttribute="top" secondItem="dN2-rR-xKE" secondAttribute="top" type="default" id="MLv-Tx-GNQ"/>
                             <constraint firstItem="dN2-rR-xKE" firstAttribute="centerX" secondItem="d8i-GR-OD8" secondAttribute="centerX" type="default" id="MWC-BV-d9L"/>
                             <constraint firstItem="rXF-Le-S3u" firstAttribute="centerY" secondItem="d8i-GR-OD8" secondAttribute="centerY" type="default" id="N7h-Q6-Pis"/>
                             <constraint firstItem="rXF-Le-S3u" firstAttribute="bottom" secondItem="dN2-rR-xKE" secondAttribute="bottom" type="default" id="hzL-eA-wm6"/>
-                            <constraint firstAttribute="trailing" secondItem="rXF-Le-S3u" secondAttribute="trailing" constant="13" id="oQS-gD-Pw1"/>
                             <constraint firstItem="ef0-nN-bdv" firstAttribute="top" secondItem="d8i-GR-OD8" secondAttribute="top" constant="7" id="ttx-qU-0cs"/>
                             <constraint firstItem="ef0-nN-bdv" firstAttribute="leading" secondItem="d8i-GR-OD8" secondAttribute="leading" constant="12" id="wjM-64-937"/>
                         </constraints>
