@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainController : UIViewController
+@class GameCenterManager;
+@interface MainController : UIViewController <UIAlertViewDelegate>
+
+@property(strong, nonatomic) GameCenterManager *gameCenterManager;
 
 @end
