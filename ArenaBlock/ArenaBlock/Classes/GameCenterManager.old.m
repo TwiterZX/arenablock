@@ -29,12 +29,10 @@
 
 - (void)authenticateLocalUser {
     if([GKLocalPlayer localPlayer].authenticated == NO) {
-        
 
         [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *viewController, NSError *error) {
             NSLog(@"authenticateHandler");
             if (viewController != nil) {
-                
                 NSLog(@"presenting viewController");
                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
                 [appDelegate.window.rootViewController presentViewController:viewController animated:YES completion:nil];
