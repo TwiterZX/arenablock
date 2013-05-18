@@ -37,9 +37,7 @@
                 
                 NSLog(@"presenting viewController");
                 AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
-                [appDelegate.window.rootViewController presentViewController:viewController animated:YES completion:^{
-                }];
-                
+                [appDelegate.window.rootViewController presentViewController:viewController animated:YES completion:nil];
             }
             else if ([GKLocalPlayer localPlayer].isAuthenticated) {
                 NSLog(@"player isAuthenticated");
