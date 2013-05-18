@@ -22,7 +22,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor greenColor]];
+//    [self.view setBackgroundColor:[UIColor greenColor]];
     
     arrayOfPieces = [NSMutableArray array];
     
@@ -31,23 +31,20 @@
 //    arrayOfPieces = [[NSMutableArray alloc] initWithArray:arrayP];
 
     
-   pieceImg_1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+  // pieceImg_1 = [[UIImageView alloc] initWithFrame:CGRectMake(20, 0, 140, 140)];
     pieceImg_1.userInteractionEnabled = YES;
-    [pieceImg_1 setBackgroundColor:[UIColor blueColor]];
     pieceImg_1.tag = 0;
     [pieceImg_1 setContentMode:UIViewContentModeScaleAspectFit];
     
     
-    pieceImg_2 = [[UIImageView alloc] initWithFrame:CGRectMake(60, 0, 50, 50)];
-    [pieceImg_2 setBackgroundColor:[UIColor darkGrayColor]];
+   // pieceImg_2 = [[UIImageView alloc] initWithFrame:CGRectMake(180, 0, 140, 140)];
     pieceImg_2.userInteractionEnabled = YES;
     pieceImg_2.tag = 1;
     [pieceImg_2 setContentMode:UIViewContentModeScaleAspectFit];
 
     
-    pieceImg_3 = [[UIImageView alloc] initWithFrame:CGRectMake(120, 0, 50, 50)];
+   // pieceImg_3 = [[UIImageView alloc] initWithFrame:CGRectMake(340, 0, 140, 140)];
     [pieceImg_3 setContentMode:UIViewContentModeScaleAspectFit];
-    [pieceImg_3 setBackgroundColor:[UIColor yellowColor]];
     pieceImg_3.userInteractionEnabled = YES;
     pieceImg_3.tag = 2;
 

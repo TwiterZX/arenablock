@@ -55,22 +55,6 @@ static  PieceGenerator *_instance = nil;
     CGFloat maxHeight = 0.f;
     
     [[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0];
-    
-//    NSMutableDictionary *_pieceCoordonates = [NSMutableDictionary dictionary];
-//    
-//    NSLog(@"SCREEN WIDHT : %f", [[UIScreen mainScreen] bounds].size.width );
-//    
-//    
-//    NSValue *value_1 = [NSValue valueWithCGPoint:CGPointMake(0, 0)];
-//    NSValue *value_2 = [NSValue valueWithCGPoint:CGPointMake(0, 1)];
-//    NSValue *value_3 = [NSValue valueWithCGPoint:CGPointMake(0, 2)];
-//    NSValue *value_4 = [NSValue valueWithCGPoint:CGPointMake(0, 3)];
-//    
-//    
-//
-//    
-//    NSArray *position_1 = [[NSArray alloc] initWithObjects:value_1, value_2, value_3, value_4 , nil];
-    
     UIGraphicsBeginImageContext(CGSizeMake([kSizeBoard floatValue], [kSizeBoard floatValue]));
     CGContextRef context = UIGraphicsGetCurrentContext();
 
@@ -78,8 +62,6 @@ static  PieceGenerator *_instance = nil;
     {
         NSString *value = [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] objectAtIndex:i];
         CGPoint point = CGPointFromString(value);
-        NSLog(@"I : %i total : %i", i, [[[pieceIdentification valueForKey:kKeyForPiece] objectAtIndex:0] count]);
-        NSLog(@"X : %f Y : %f", point.x, point.y);
         if (i == 0) {
             [self addImageToContext:context withImage:[UIImage imageNamed:kImageKeyForPiece_start] atPosition:CGPointMake(point.x, point.y)];
         }
@@ -91,7 +73,6 @@ static  PieceGenerator *_instance = nil;
         {
             [self addImageToContext:context withImage:[UIImage imageNamed:kImageKeyForPiece] atPosition:CGPointMake(point.x, point.y)];
         }
-        NSLog(@"value : %@", value);
         if (maxWidth < point.y) {
             maxWidth = point.y;
         }
