@@ -13,7 +13,6 @@
 @implementation ADBTableViewCell
 
 @synthesize delegate = _delegate;
-@synthesize caching = _caching;
 
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString *)reuseIdentifier;
@@ -42,7 +41,7 @@
         
         NSURL *path = [NSURL URLWithString:[[images objectAtIndex:i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         //NSURL *path = [NSURL URLWithString:[images objectAtIndex:i]];
-        [image setImageWithURL:path placeholderImage:[UIImage imageNamed:@"piece_100x100.png"]];
+        [image setImageWithURL:path placeholderImage:[UIImage imageNamed:@"piece.png"]];
         [_imageSubviews addObject:image];
     }
     

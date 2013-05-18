@@ -110,9 +110,7 @@ static  PieceGenerator *_instance = nil;
 
 - (void)fillArray:(NSMutableArray *)array limit:(NSInteger)lim {
     // We filter
-    NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:_arrayPieces];
-    [filteredArray removeObjectsInArray:array];
-   // DLog(@"Array filtered %@", filteredArray);
+    NSMutableArray *filteredArray = [self filterArrayPieceswithArray:array];
     
     // We add as much pieces as needed
     int end = lim - [array count];
@@ -128,7 +126,20 @@ static  PieceGenerator *_instance = nil;
 
         [array addObject:p];
     }
-     DLog(@"array : %@", array);
+}
+
+#pragma mark - Filter array
+
+// Filter the array of pieces with the one we already have
+- (NSMutableArray *)filterArrayPieceswithArray:(NSArray *)array {
+    NSMutableArray *filteredArray = [NSMutableArray arrayWithArray:_arrayPieces];
+    for (NSDictionary *dic in _arrayPieces) {
+        for (Piece *piece in array) {
+            if ([dic isEqualToDictionary:piece.pieceDict])
+                [filteredArray removeObject:dic];
+        }
+    }
+    return filteredArray;
 }
 
 #pragma mark - Random Pieces in array

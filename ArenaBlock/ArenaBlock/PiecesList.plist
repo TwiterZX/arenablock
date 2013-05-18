@@ -261,5 +261,67 @@
 			</array>
 		</array>
 	</dict>
+	<dict>	
+		<key>name</key>
+		<string>J</string>
+		<key>pieces</key>
+		<array>
+			<array>
+				<string>{0.0,0.0}</string>
+				<string>{0.0,1.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{1.0,2.0}</string>
+			</array>
+			<array>
+				<string>{2.0,0.0}</string>
+				<string>{1.0,0.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{0.0,1.0}</string>
+			</array>
+			<array>
+				<string>{1.0,2.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{0.0,1.0}</string>
+				<string>{0.0,0.0}</string>
+			</array>
+			<array>
+				<string>{0.0,1.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{1.0,0.0}</string>
+				<string>{2.0,0.0}</string>
+			</array>	
+		</array>
+	</dict>
+	<dict>	
+		<key>name</key>
+		<string>K</string>
+		<key>pieces</key>
+		<array>
+			<array>
+				<string>{0.0,0.0}</string>
+				<string>{1.0,0.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{2.0,1.0}</string>
+			</array>
+			<array>
+				<string>{1.0,0.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{0.0,1.0}</string>
+				<string>{0.0,2.0}</string>
+			</array>
+			<array>
+				<string>{2.0,1.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{1.0,0.0}</string>
+				<string>{0.0,0.0}</string>
+			</array>
+			<array>
+				<string>{0.0,2.0}</string>
+				<string>{0.0,1.0}</string>
+				<string>{1.0,1.0}</string>
+				<string>{1.0,0.0}</string>
+			</array>	
+		</array>
+	</dict>
 </array>
 </plist>

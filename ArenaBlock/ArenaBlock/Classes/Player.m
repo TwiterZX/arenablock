@@ -10,8 +10,20 @@
 
 @implementation Player
 
+#pragma mark - Init player
+
 - (id)init {
+    self = [super init];
+    if (self) {
+        position.x = 0;
+        position.y = 0;
+    }
+    return self;
+}
+
+- (void)move {
     
 }
+
 
 @end

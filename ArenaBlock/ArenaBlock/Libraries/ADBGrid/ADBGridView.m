@@ -90,7 +90,6 @@
         cell.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     }
     
-    cell.caching = _caching;
     cell.delegate = self;
     
     while ([pathsForCell count] < [_gridDelegate numberOfImagesForRow:self]) {
