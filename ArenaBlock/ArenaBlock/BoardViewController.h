@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ADBGridView.h"
 
-@interface BoardViewController : UIViewController
+@interface BoardViewController : UIViewController<ADBGridViewDelegate> {
+   IBOutlet ADBGridView *gridView;
+}
 
 @end
