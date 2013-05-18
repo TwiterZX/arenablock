@@ -10,4 +10,7 @@
 
 @interface GameCenterManager : NSObject
 
++ (BOOL)isGameCenterAvailable;
+- (void)authenticateLocalUser;
+
 @end

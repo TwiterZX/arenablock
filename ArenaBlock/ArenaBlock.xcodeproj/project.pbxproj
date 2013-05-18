@@ -20,6 +20,7 @@
 		E47D2E8217477F28000EBFE1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D2E7F17477F28000EBFE1 /* AppDelegate.m */; };
 		E47D2E8317477F28000EBFE1 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D2E8117477F28000EBFE1 /* MainController.m */; };
 		E47D2E9117479C24000EBFE1 /* GameCenterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D2E9017479C24000EBFE1 /* GameCenterManager.m */; };
+		E47D2E9317479F61000EBFE1 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47D2E9217479F61000EBFE1 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		E47D2E8117477F28000EBFE1 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainController.m; path = Classes/MainController.m; sourceTree = "<group>"; };
 		E47D2E8F17479C24000EBFE1 /* GameCenterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameCenterManager.h; path = Classes/GameCenterManager.h; sourceTree = "<group>"; };
 		E47D2E9017479C24000EBFE1 /* GameCenterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameCenterManager.m; path = Classes/GameCenterManager.m; sourceTree = "<group>"; };
+		E47D2E9217479F61000EBFE1 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 				E47D2E5817477EDD000EBFE1 /* UIKit.framework in Frameworks */,
 				E47D2E5A17477EDD000EBFE1 /* Foundation.framework in Frameworks */,
 				E47D2E5C17477EDD000EBFE1 /* CoreGraphics.framework in Frameworks */,
+				E47D2E9317479F61000EBFE1 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 				E47D2E5717477EDD000EBFE1 /* UIKit.framework */,
 				E47D2E5917477EDD000EBFE1 /* Foundation.framework */,
 				E47D2E5B17477EDD000EBFE1 /* CoreGraphics.framework */,
+				E47D2E9217479F61000EBFE1 /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
