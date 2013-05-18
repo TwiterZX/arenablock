@@ -12,4 +12,6 @@
 
 + (PiecesManager *)sharedInstance;
 
+- (void)fillArray:(NSMutableArray **)array limit:(NSInteger)lim;
+
 @end

@@ -29,6 +29,9 @@ static PiecesManager *_instance = nil;
     self = [super init];
     if (self) {
         _arrayPieces = [self loadInformationFromPlist];
+//        NSMutableArray *arrayPlayerPieces = [NSMutableArray array];
+//        [[PiecesManager sharedInstance] fillArray:&arrayPlayerPieces limit:3];
+
     }
     return self;
 }
