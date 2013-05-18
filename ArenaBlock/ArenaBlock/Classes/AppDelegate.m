@@ -13,8 +13,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    NSMutableArray *arrayP = [NSMutableArray array];
-    [[PieceGenerator sharedInstance] fillArray:&arrayP limit:3];
     
     return YES;
 }
