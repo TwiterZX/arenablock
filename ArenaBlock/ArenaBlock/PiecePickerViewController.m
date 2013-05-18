@@ -96,23 +96,27 @@
     
     [self setPositionOfPiece:p currentPos:p.piecePos];
     
-    static    float degrees = 90; 
+    static    float degrees_1 = 90;
+    static    float degrees_2 = 90;
+    static    float degrees_3 = 90;
 
     switch (sender.view.tag) {
         case 0:
-            pieceImg_1.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            pieceImg_1.transform = CGAffineTransformMakeRotation(degrees_1 * M_PI/180);
+            degrees_1 += 90;
             break;
         case 1:
-            pieceImg_2.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            pieceImg_2.transform = CGAffineTransformMakeRotation(degrees_2 * M_PI/180);
+            degrees_2 += 90;
             break;
         case 2:
-            pieceImg_3.transform = CGAffineTransformMakeRotation(degrees * M_PI/180);
+            pieceImg_3.transform = CGAffineTransformMakeRotation(degrees_3 * M_PI/180);
+            degrees_3 += 90;
             break;
         default:
             break;
     }
     
-    degrees += 90;
 }
 
 - (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos
