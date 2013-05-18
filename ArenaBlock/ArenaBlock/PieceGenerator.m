@@ -73,8 +73,11 @@ static  PieceGenerator *_instance = nil;
         
         CGPoint point = CGPointFromString(value);
         
+        NSLog(@"X : %f Y : %f", point.x, point.y);
+        
         [self addImageToContext:context withImage:[UIImage imageNamed:@"piece_160x160"] atPosition:CGPointMake(point.x, point.y)];
         
+        NSLog(@"value : %@", value);
         if (maxWidth < point.y) {
             maxWidth = point.y;
         }
@@ -88,7 +91,6 @@ static  PieceGenerator *_instance = nil;
     maxWidth =  maxWidth * [kWidthPiece floatValue];
     maxHeight =  maxHeight * [kHeightPiece floatValue];
     UIImage *imageCropped = [self imageWithImage:image cropAtSize:CGSizeMake(maxWidth+[kWidthPiece floatValue], maxHeight+[kHeightPiece floatValue])];
-    
     
     
     return imageCropped;
