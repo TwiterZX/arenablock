@@ -16,7 +16,7 @@
 
 static PiecesManager *_instance = nil;
 
-- (PiecesManager *)sharedInstance {
++ (PiecesManager *)sharedInstance {
     if (!_instance) {
         _instance = [self init];
     }

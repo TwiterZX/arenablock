@@ -10,4 +10,6 @@
     NSArray *_arrayPieces;
 }
 
++ (PiecesManager *)sharedInstance;
+
 @end
