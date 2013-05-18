@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PieceGenerator : NSObject
+@interface PieceGenerator : NSObject {
+    NSArray *_arrayPieces;
+}
 
-+ (UIImage *)createPieceGenerator:(NSDictionary *)pieceCoordonates;
++ (PieceGenerator *)sharedInstance;
+
+- (void)fillArray:(NSMutableArray **)array limit:(NSInteger)lim;
+- (UIImage *)createPieceGenerator:(NSDictionary *)pieceCoordonates;
 
 @end
