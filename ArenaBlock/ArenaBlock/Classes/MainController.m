@@ -45,9 +45,7 @@
     }
     
     /*
-    
 
-    
     self.currentLeaderBoard= kEasyLeaderboardID;
 	
 	self.currentScore= 0;

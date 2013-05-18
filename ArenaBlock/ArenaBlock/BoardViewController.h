@@ -7,9 +7,13 @@
 //
 
 #import "ADBGridView.h"
+#import "Player.h"
 
-@interface BoardViewController : UIViewController<ADBGridViewDelegate> {
+@interface BoardViewController : UIViewController<ADBGridViewDelegate, PlayerDataSourceProtocol> {
    IBOutlet ADBGridView *gridView;
+    
+    Player *player1;
+    Player *player2;
 }
 
 @end
