@@ -26,6 +26,8 @@
 @property int degrees_2;
 @property int degrees_3;
 
+@property (nonatomic, strong) NSMutableArray *arrayPiecesImg;
+
 
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_1;
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_2;

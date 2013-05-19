@@ -108,6 +108,7 @@
     
     [hMove setIsHost:self.isHost];
     [hMove setMoveDictionnary:dictionnary];
+    [[History sharedInstance] addMoveToHistory:hMove];
     
     DLog(@"dictionnary of move : %@", dictionnary);
 }
