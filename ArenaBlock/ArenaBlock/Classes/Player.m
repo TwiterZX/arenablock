@@ -79,9 +79,6 @@
 }
 
 - (CABasicAnimation *)animateMovePlayerToPoint:(CGPoint)point {
-    // We calculate the real point depending on the actual place of the player
-    DLog(@"Start from %@ with piece %@", NSStringFromCGPoint(position), NSStringFromCGPoint(point));
-
     // Convert the point for the view
     CGPoint convertedPoint = [self moveToCoordinate:point];
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -92,10 +89,8 @@
 
     // Update the position of the player in the matrice {0,2}
     position = point;
-    DLog(@"End to %@", NSStringFromCGPoint(position));
     
     return animation;
-//    [_spritePlayer addAnimation:animation forKey:@"position"];
 }
 
 - (CGPoint)moveToCoordinate:(CGPoint)p {
