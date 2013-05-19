@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
+#import "SoundManager.h"
 #import "AppDelegate.h"
 #import "PieceGenerator.h"
+#import "WebServiceClient.h"
 
 @implementation AppDelegate
 @synthesize bankOfSound;
@@ -15,6 +17,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [self initAllSounds];
+    
+    [WebServiceClient sharedInstance];
+    
     return YES;
 }
 
@@ -58,9 +63,6 @@
 
 
     [bankOfSound setValue:wrong forKey:@"Wrong"];
-   
-    
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

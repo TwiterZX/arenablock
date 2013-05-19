@@ -104,7 +104,7 @@
                 [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
             
             
-          //  hMove.isHost = [delegatePicker fetchPlayer1Position]
+            //  hMove.isHost = [delegatePicker fetchPlayer1Position]
             
             // Reload the pieces array
             [arrayOfPieces removeObjectAtIndex:index];
@@ -118,6 +118,8 @@
             UIAlertView *alert  =  [[UIAlertView alloc] initWithTitle:@"TU PEUX PAS JOUER CA MARCHE PAS BOUFON !" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }
+        
+        
     }
 }
 
@@ -130,7 +132,7 @@
             degrees_1 = 270;
             pieceImg_1.transform = CGAffineTransformIdentity;
             break;
-    
+            
         case 1:
             [pieceImg_2 setNeedsDisplay];
             degrees_2 = 270;
@@ -147,6 +149,7 @@
             break;
     }
 }
+
 -(void)reloadViewPieces
 {
     Piece *p1 = (Piece *)[arrayOfPieces objectAtIndex:0];
@@ -204,7 +207,7 @@
     NSLog(@"degree : %i", degrees_1);
     
     [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Rotate"]  looping:NO];
-    
+
     [self isPieceMovable:p forView:tmpImgView];
 }
 

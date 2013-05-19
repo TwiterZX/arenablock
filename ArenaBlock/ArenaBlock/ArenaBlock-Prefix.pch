@@ -18,3 +18,6 @@
 #else
     #define DLog(...)
 #endif
+
+#define SERVER_HOST         @"arenablock.herokuapp.com/game"
+#define REQUEST_TIMEOUT     10.0
