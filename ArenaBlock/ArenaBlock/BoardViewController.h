@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
+#import "PiecePickerViewController.h"
 #import "ADBGridView.h"
 #import "Player.h"
 
-@interface BoardViewController : UIViewController<ADBGridViewDelegate, PlayerDataSourceProtocol> {
+@interface BoardViewController : UIViewController<ADBGridViewDelegate, PlayerDataSourceProtocol, PiecePickerDelegateProtocol>
+{
    IBOutlet ADBGridView *gridView;
-    
+
     Player *player1;
     Player *player2;
 }

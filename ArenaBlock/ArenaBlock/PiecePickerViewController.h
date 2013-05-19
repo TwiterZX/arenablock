@@ -6,7 +6,16 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@class Piece;
+@class Player;
+
+@protocol PiecePickerDelegateProtocol <NSObject>
+
+- (void)piecePickerDelegatePlayerPlayedPiece:(Piece *)p;
+
+- (CGPoint)fetchPlayer1Position;
+
+@end
 
 @interface PiecePickerViewController : UIViewController <UIGestureRecognizerDelegate>
 
@@ -18,5 +27,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_2;
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_3;
 @property (nonatomic, strong) NSMutableArray *arrayOfPieces;
+@property (nonatomic, assign) IBOutlet id<PiecePickerDelegateProtocol> delegatePicker;
 
 @end

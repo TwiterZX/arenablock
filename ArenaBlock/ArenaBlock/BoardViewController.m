@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
+#import "Piece.h"
 #import "BoardViewController.h"
 
 @interface BoardViewController ()
@@ -31,6 +32,13 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Piece Picker Delegate
+
+- (void)piecePickerDelegatePlayerPlayedPiece:(Piece *)p {
+    // Move player
+    [player1 movePlayerWithPiece:p];
 }
 
 #pragma mark - ADBGridViewDelegate
@@ -64,6 +72,10 @@
 
 - (UIView *)viewForPlayer:(Player *)p {
     return self.view;
+}
+
+- (CGPoint)fetchPlayer1Position {
+    return [player1 position];
 }
 
 @end

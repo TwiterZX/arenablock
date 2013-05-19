@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @interface ContainerViewController : UIViewController
 
 @end

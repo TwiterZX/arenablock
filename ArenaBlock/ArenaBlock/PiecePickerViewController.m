@@ -6,10 +6,12 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import "PiecePickerViewController.h"
 #import "PieceGenerator.h"
 #import "Piece.h"
 #import "MoveManager.h"
+#import "BoardViewController.h"
+
+#import "PiecePickerViewController.h"
 
 @interface PiecePickerViewController ()
 
@@ -19,6 +21,7 @@
 
 @synthesize pieceImg_1, pieceImg_2, pieceImg_3, arrayOfPieces;
 @synthesize degrees_1, degrees_2, degrees_3;
+@synthesize delegatePicker;
 
 - (void)viewDidLoad
 {
@@ -36,6 +39,10 @@
     [self initGesture];
     [self reloadViewPieces];
     
+    for (UIViewController<PiecePickerDelegateProtocol> *vc in [[self parentViewController] childViewControllers]) {
+        if ([vc isKindOfClass:[BoardViewController class]])
+            self.delegatePicker = vc;
+    }
 }
 
 - (void)initPieces
@@ -84,7 +91,15 @@
 {
     if(UIGestureRecognizerStateBegan == gesture.state) {
         NSInteger index = gesture.view.tag;
-        if ([MoveManager isMovePossible:(Piece *)[arrayOfPieces objectAtIndex:index]]) {
+        Piece *p = (Piece *)[arrayOfPieces objectAtIndex:index];
+        CGPoint playerPos = [delegatePicker fetchPlayer1Position];
+        if ([MoveManager isMovePossible:p withPlayerPosition:playerPos]) {
+           
+            // Tells delegate the piece we have chosen
+            if (delegatePicker)
+                [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
+            
+            // Reload the pieces array
             [arrayOfPieces removeObjectAtIndex:index];
             [self reloadDegreeForIndex:index];
             [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
@@ -173,9 +188,9 @@
     
     [self isPieceMovable:p forView:tmpImgView];
     
-    NSLog(@"position : %i", p.piecePos);
-    
-    NSLog(@"degrees_1 : %f", degrees_1);
+//    NSLog(@"position : %i", p.piecePos);
+//    
+//    NSLog(@"degrees_1 : %f", degrees_1);
 }
 
 - (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos

@@ -26,5 +26,8 @@
 }
 
 - (id)initWithDelegate:(id<PlayerDataSourceProtocol>)del;
+- (void)movePlayerWithPiece:(Piece *)p;
+
+- (CGPoint)position;
 
 @end
