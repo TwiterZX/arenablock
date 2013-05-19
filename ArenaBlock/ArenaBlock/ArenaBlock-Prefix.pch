@@ -21,3 +21,5 @@
 
 #define SERVER_HOST         @"arenablock.herokuapp.com/game"
 #define REQUEST_TIMEOUT     10.0
+
+#define RAMDOM(a, b) ((arc4random() % (b - a)) + a)

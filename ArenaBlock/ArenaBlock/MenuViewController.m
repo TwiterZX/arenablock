@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
+#import "MBProgressHUD.h"
+#import "WebServiceClient.h"
 #import "MenuViewController.h"
 
 @interface MenuViewController ()
@@ -14,17 +16,14 @@
 
 @implementation MenuViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - action
@@ -34,9 +33,25 @@
     
 }
 
-- (IBAction)action_newGame:(id)sender
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    
+    if ([identifier isEqualToString:@"NewGameSegue"])
+    {
+        if ([[WebServiceClient sharedInstance] isInternetAvailable] != TRUE) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText = @"No internet access";
+            hud.mode = MBProgressHUDModeText;
+            
+            
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+            
+            return FALSE;
+        }
+    }
+    return YES;
 }
 
 @end

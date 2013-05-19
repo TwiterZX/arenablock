@@ -5,13 +5,17 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import "GameManager.h"
 #import "Reachability.h"
 #import "MBProgressHUD.h"
 #import "WebServiceClient.h"
 #import "NSObject+SBJson.h"
 #import "ASIFormDataRequest.h"
+#import "Player.h"
 
 @implementation WebServiceClient
+
+#define TIMEOUT_PULLING 5.0
 
 @synthesize wsdelegate=_wsdelegate;
 
@@ -110,62 +114,134 @@ static WebServiceClient *_instance = nil;
             break;
         }
     }
-    
-    // There is internet connection
-    if (_isInternetAvailable == TRUE)
-    {
-        #warning - This is a test
-        [self createGameWithPlayer1:43 player2:4343];
-    }
 }
 
 #pragma mark - Create Game
 
-- (void)createGameWithPlayer1:(NSInteger)p1 player2:(NSInteger)p2
+- (void)createGame
 {
     if (_isInternetAvailable == TRUE)
     {
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/create", SERVER_HOST]];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/smart_create", SERVER_HOST]];
         ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
         [request setShouldContinueWhenAppEntersBackground:YES];
         [request setDelegate:self];
         [request setTimeOutSeconds:REQUEST_TIMEOUT];
         [request setDidFinishSelector:@selector(createGameSuccess:)];
         [request setDidFailSelector:@selector(createGameFailed:)];
-        [request setPostValue:[NSNumber numberWithInt:p1] forKey:@"first_player"];
-        [request setPostValue:[NSNumber numberWithInt:p2] forKey:@"second_player"];
         [request startAsynchronous];
     }
     else
     {
         if (_wsdelegate)
-            [_wsdelegate createGameFailed:@"Vous n'avez pas de connexion internet. Vous ne pouvez jouer"];
+            [_wsdelegate createGameFailed:@"No internet access."];
     }
 }
 
 - (void)createGameSuccess:(ASIHTTPRequest *)request
 {
-    NSString *answer = [request responseString];
-    NSInteger res = [answer intValue];
+    if (_wsdelegate)
+        [_wsdelegate createGameSuccess:request];
 
-    DLog(@"res %@", answer);
-    if (res == TRUE)
-    {
-        if (_wsdelegate)
-            [_wsdelegate createGameSuccess:request];
-    }
+    // Start NSTimer
+    [NSTimer scheduledTimerWithTimeInterval:TIMEOUT_PULLING target:self selector:@selector(checkForNewStatus) userInfo:nil repeats:YES];
 }
 
 - (void)createGameFailed:(ASIHTTPRequest *)request
 {
     if ([[request error] code] == REQUEST_TIMEOUT)
     {
-        DLog(@"Request time out");
+        // We reload the create game
+        [self createGame];
     }
     else
     {
         if (_wsdelegate)
-            [_wsdelegate createGameFailed:@"Nous ne pouvons créer une session de jeu."];
+            [_wsdelegate createGameFailed:@"Sorry. Cant contact server"];
+    }
+}
+
+#pragma mark - Pulling
+
+- (void)checkForNewStatus {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/app_state", SERVER_HOST]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setShouldContinueWhenAppEntersBackground:YES];
+    [request setDelegate:self];
+    [request setPostValue:(([[[GameManager sharedInstance] player1] isHost]) ? (@"true") : (@"false")) forKey:@"is_host"];
+    [request setPostValue:[NSNumber numberWithInteger:[[GameManager sharedInstance] idGame]] forKey:@"game"];
+    [request setTimeOutSeconds:REQUEST_TIMEOUT];
+    [request setDidFinishSelector:@selector(checkStatusSuccess:)];
+    [request setDidFailSelector:@selector(checkStatusFailed:)];
+    [request startAsynchronous];
+}
+
+- (void)checkStatusSuccess:(ASIHTTPRequest *)request
+{
+    DLog(@"Response string %@", [request responseString]);
+    if (![[request responseString] isEqualToString:@"false"]) {
+        NSDictionary *dic = [[request responseString] JSONValue];
+        if ([[dic objectForKey:@"function"] isEqualToString:@"game_joined"]) {
+            if (_wsdelegate)
+                [_wsdelegate joinedGameSuccess:dic];
+        }
+        else if ([[dic objectForKey:@"function"] isEqualToString:@"move"]) {
+            if (_wsdelegate)
+                [_wsdelegate moveFromOtherPlayer:dic];
+        }
+    }
+}
+
+- (void)checkStatusFailed:(ASIHTTPRequest *)request
+{
+    if ([[request error] code] == REQUEST_TIMEOUT)
+    {
+        [self checkForNewStatus];
+    }
+    else
+    {
+//        if (_wsdelegate)
+//            [_wsdelegate createGameFailed:@"Sorry. Cant contact server"];
+    }
+}
+
+#pragma mark - Move 
+
+- (void)movePiece:(NSString *)pieceName {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/move", SERVER_HOST]];
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setShouldContinueWhenAppEntersBackground:YES];
+    [request setDelegate:self];
+    [request setPostValue:(([[[GameManager sharedInstance] player1] isHost]) ? (@"true") : (@"false")) forKey:@"is_host"];
+    [request setPostValue:[NSNumber numberWithInteger:[[GameManager sharedInstance] idGame]] forKey:@"game"];
+    [request setPostValue:pieceName forKey:@"piece"];
+    [request setTimeOutSeconds:REQUEST_TIMEOUT];
+    [request setDidFinishSelector:@selector(movePieceSuccess:)];
+    [request setDidFailSelector:@selector(movePieceFailed:)];
+    [request startAsynchronous];
+}
+
+- (void)movePieceSuccess:(ASIHTTPRequest *)request
+{
+    DLog(@"Response string %@", [request responseString]);
+    if (![[request responseString] isEqualToString:@"false"]) {
+        NSDictionary *dic = [[request responseString] JSONValue];
+        if ([[dic objectForKey:@"function"] isEqualToString:@"game_joined"]) {
+            if (_wsdelegate)
+                [_wsdelegate joinedGameSuccess:dic];
+        }
+    }
+}
+
+- (void)movePieceFailed:(ASIHTTPRequest *)request
+{
+    if ([[request error] code] == REQUEST_TIMEOUT)
+    {
+    }
+    else
+    {
+        //        if (_wsdelegate)
+        //            [_wsdelegate createGameFailed:@"Sorry. Cant contact server"];
     }
 }
 

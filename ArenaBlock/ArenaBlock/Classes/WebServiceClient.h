@@ -30,5 +30,7 @@ typedef void(^WebServiceCallback)(id argsData);
 + (id)sharedInstance;
 
 - (BOOL)isInternetAvailable;
+- (void)createGame;
+- (void)movePiece:(NSString *)pieceName;
 
 @end

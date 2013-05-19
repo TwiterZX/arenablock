@@ -19,9 +19,6 @@
 #define kImageKeyForPiece_end   @"piece_end"
 #define kImageKeyForPiece_start @"piece_start"
 
-
-#define RAMDOM(a, b) ((arc4random() % (b - a)) + a)
-
 @implementation PieceGenerator
 
 static  PieceGenerator *_instance = nil;
@@ -45,6 +42,22 @@ static  PieceGenerator *_instance = nil;
     return self;
 }
 
+#pragma mark - Get Piece From 
+
+- (Piece *)getPieceFromString:(NSString *)str {
+    Piece *p = [[Piece alloc] init];
+    p.piecePos = [[str substringFromIndex:1] intValue];
+    NSString *pieceName = [str substringToIndex:1];
+    DLog(@"Piece pos %i", p.piecePos);
+
+    for (NSDictionary *dic in _arrayPieces) {
+        if ([[dic objectForKey:@"name"] isEqualToString:pieceName]) {
+            p.pieceDict = dic;
+            break;
+        }
+    }
+    return p;
+}
 
 #pragma mark - Create Piece From Dictionnary
 

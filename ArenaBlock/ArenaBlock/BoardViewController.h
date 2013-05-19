@@ -9,13 +9,13 @@
 #import "PiecePickerViewController.h"
 #import "ADBGridView.h"
 #import "Player.h"
+#import "WebServiceClient.h"
 
-@interface BoardViewController : UIViewController<ADBGridViewDelegate, PlayerDataSourceProtocol, PiecePickerDelegateProtocol>
+@interface BoardViewController : UIViewController<ADBGridViewDelegate, PlayerDataSourceProtocol, PiecePickerDelegateProtocol, WebServiceProtocol>
 {
    IBOutlet ADBGridView *gridView;
-
-    Player *player1;
-    Player *player2;
 }
+
+@property (nonatomic, assign)   BOOL isHost;
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class Piece;
 
 @interface PieceGenerator : NSObject {
     NSArray *_arrayPieces;
@@ -16,5 +16,6 @@
 
 - (void)fillArray:(NSMutableArray *)array limit:(NSInteger)lim;
 - (UIImage *)createPieceGenerator:(NSDictionary *)pieceCoordonates;
+- (Piece *)getPieceFromString:(NSString *)str;
 
 @end

@@ -16,10 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-   // [self initAllSounds];
-//    
-//    [WebServiceClient sharedInstance];
-//    
+    [self initAllSounds];
+    
+    [WebServiceClient sharedInstance];
+    
     return YES;
 }
 

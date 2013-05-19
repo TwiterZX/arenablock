@@ -23,7 +23,6 @@
 {
     [super viewDidLoad];
     [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Jungle"]  looping:YES];
-
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

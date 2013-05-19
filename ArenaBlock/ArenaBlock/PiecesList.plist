@@ -261,7 +261,7 @@
 			</array>
 		</array>
 	</dict>
-	<dict>	
+	<dict>
 		<key>name</key>
 		<string>J</string>
 		<key>pieces</key>
@@ -289,10 +289,10 @@
 				<string>{1.0,1.0}</string>
 				<string>{1.0,0.0}</string>
 				<string>{2.0,0.0}</string>
-			</array>	
+			</array>
 		</array>
 	</dict>
-	<dict>	
+	<dict>
 		<key>name</key>
 		<string>K</string>
 		<key>pieces</key>
@@ -320,7 +320,7 @@
 				<string>{0.0,1.0}</string>
 				<string>{1.0,1.0}</string>
 				<string>{1.0,0.0}</string>
-			</array>	
+			</array>
 		</array>
 	</dict>
 </array>

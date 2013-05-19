@@ -10,12 +10,14 @@
 #import "Piece.h"
 #import "MCSpriteLayer.h"
 #import "Player.h"
+#import "WebServiceClient.h"
 
 #import "HistoryMove.h"
 #import "History.h"
 
 @implementation Player
 
+@synthesize  idP;
 
 #define SIZE_CUBE   80  // half of a case
 #define WIDTH_SPRITE    80.0
@@ -24,27 +26,37 @@
 
 #define TIMER_ANIMATION     5.0
 
+#define PLAYER1_POS CGPointMake(0, 0)
+#define PLAYER2_POS CGPointMake(3, 3)
+
 #pragma mark - Init player
 
-- (id)initWithDelegate:(id<PlayerDataSourceProtocol>)del {
+- (id)initWithHost:(BOOL)iH {
     self = [super init];
     if (self) {
-        delegateSprite = del;
-        [self initSprite];
+        isHost = iH;
     }
     return self;
 }
 
 #pragma mark - Init sprite
 
-- (void)initSprite {
+- (void)initSpriteWithDelegate:(id<PlayerDataSourceProtocol>)del {
+    delegateSprite = del;
+    
     // Sprite
     NSString *path = [[NSBundle mainBundle] pathForResource:@"sprite_idle" ofType:@"png"];
     CGImageRef richterImg = [UIImage imageWithContentsOfFile:path].CGImage;
     CGSize fixedSize = CGSizeMake(WIDTH_SPRITE, HEIGHT_SPRITE);
     _spritePlayer = [MCSpriteLayer layerWithImage:richterImg sampleSize:fixedSize];
-    _spritePlayer.position = [self moveToCoordinate:CGPointMake(0, 3)];
-    position = CGPointMake(0, 3);
+
+    if (isHost) {
+        _spritePlayer.position = [self moveToCoordinate:PLAYER1_POS];
+        position = PLAYER1_POS;
+    } else {
+        _spritePlayer.position = [self moveToCoordinate:PLAYER2_POS];
+        position = PLAYER2_POS;
+    }
 
     [self setUpAnimation];
     
@@ -65,9 +77,6 @@
 #pragma mark - Move player
 
 - (void)movePlayerWithPiece:(Piece *)p {
-
-    
-    
     // Generate animation
     NSArray *pp = [[p.pieceDict objectForKey:@"pieces"] objectAtIndex:p.piecePos];
     NSArray *ppConverted = [MoveManager getPathAccordingToPiece:pp andPlayerPosition:position];
@@ -89,20 +98,18 @@
     [_spritePlayer addAnimation:group forKey:@"allMyAnimations"];
     
     DLog(@"End move %@", NSStringFromCGPoint(_spritePlayer.position));
-    
-    
+        
     // record movement
-    
     HistoryMove *hMove = [[HistoryMove alloc] init];
     
-    NSLog(@"move : %@", [[p.pieceDict objectForKey:@"pieces"] objectAtIndex:p.piecePos]);
+    DLog(@"move : %@", [[p.pieceDict objectForKey:@"pieces"] objectAtIndex:p.piecePos]);
     NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:
                            @"move", arrayMovement,  nil];
     
     [hMove setIsHost:self.isHost];
     [hMove setMoveDictionnary:dictionnary];
     
-    NSLog(@"dictionnary of move : %@", dictionnary);
+    DLog(@"dictionnary of move : %@", dictionnary);
 }
 
 - (CABasicAnimation *)animateMovePlayerToPoint:(CGPoint)point {

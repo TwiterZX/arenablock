@@ -8,6 +8,8 @@
 
 #import "Piece.h"
 #import "BoardViewController.h"
+#import "GameManager.h"
+#import "PieceGenerator.h"
 
 @interface BoardViewController ()
 
@@ -24,9 +26,10 @@
     
     gridView.gridDelegate = self;
     
-    // Init player
-    player1 = [[Player alloc] initWithDelegate:self];
-//    player1.isHost = YES;
+    [[[GameManager sharedInstance] fetchPlayerHost] initSpriteWithDelegate:self];
+    [[[GameManager sharedInstance] fetchPlayerNotHost] initSpriteWithDelegate:self];
+    
+    [[WebServiceClient sharedInstance] setWsdelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,11 +38,39 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - WebService Protocol
+
+- (void)moveFromOtherPlayer:(NSDictionary *)dic {
+    Player *slave = [[GameManager sharedInstance] fetchPlayerNotHost];
+    
+    Piece *p = [[PieceGenerator sharedInstance] getPieceFromString:[dic objectForKey:@"parameter"]];
+    
+    DLog(@"Dico %@", p.pieceDict);
+    
+    [slave movePlayerWithPiece:p];
+}
+
 #pragma mark - Piece Picker Delegate
 
 - (void)piecePickerDelegatePlayerPlayedPiece:(Piece *)p {
+    Player *host = [[GameManager sharedInstance] fetchPlayerHost];
+    Player *slave = [[GameManager sharedInstance] fetchPlayerNotHost];
+    
     // Move player
-    [player1 movePlayerWithPiece:p];
+    [host movePlayerWithPiece:p];
+
+    // Send Move to Server
+    [[WebServiceClient sharedInstance] movePiece:[NSString stringWithFormat:@"%@%i", [p.pieceDict objectForKey:@"name"], p.piecePos]];
+    
+#warning - Disable Picker 
+    
+    // Test if player 1 won
+    if ([NSStringFromCGPoint(host.position) isEqualToString:NSStringFromCGPoint(slave.position)]) {
+        DLog(@"Le HOST a gagne");
+
+#warning - WebService - tell server message WIN
+        // Afficher WIN VIEW
+    }
 }
 
 #pragma mark - ADBGridViewDelegate
@@ -76,7 +107,7 @@
 }
 
 - (CGPoint)fetchPlayer1Position {
-    return [player1 position];
+    return [[[GameManager sharedInstance] fetchPlayerHost] position];
 }
 
 @end

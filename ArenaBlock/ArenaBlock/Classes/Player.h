@@ -8,6 +8,7 @@
 
 @class MCSpriteLayer;
 @class Player;
+@class Piece;
 
 @protocol PlayerDataSourceProtocol <NSObject>
 
@@ -16,7 +17,6 @@
 @end
 
 @interface Player : NSObject {
-    NSInteger   idP;
     CGPoint position;
     BOOL isHost;
 
@@ -26,7 +26,10 @@
     id<PlayerDataSourceProtocol> delegateSprite;
 }
 
-- (id)initWithDelegate:(id<PlayerDataSourceProtocol>)del;
+@property (nonatomic, assign) NSInteger   idP;
+
+- (id)initWithHost:(BOOL)iH;
+- (void)initSpriteWithDelegate:(id<PlayerDataSourceProtocol>)del;
 - (void)movePlayerWithPiece:(Piece *)p;
 
 - (CGPoint)position;

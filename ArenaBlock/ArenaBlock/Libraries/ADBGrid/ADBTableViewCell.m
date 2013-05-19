@@ -41,7 +41,8 @@
         
         NSURL *path = [NSURL URLWithString:[[images objectAtIndex:i] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         //NSURL *path = [NSURL URLWithString:[images objectAtIndex:i]];
-        [image setImageWithURL:path placeholderImage:[UIImage imageNamed:@"piece.png"]];
+        
+        [image setImageWithURL:path placeholderImage:[UIImage imageNamed:[NSString stringWithFormat:@"bloc%i.png", RAMDOM(1, 4)]]];
         [_imageSubviews addObject:image];
     }
     

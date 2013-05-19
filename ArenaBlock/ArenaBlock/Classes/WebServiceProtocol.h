@@ -10,9 +10,10 @@
 
 @protocol WebServiceProtocol <NSObject>
 
-- (void)canNotAccessApplication:(NSString *)msg;
-
 - (void)createGameSuccess:(ASIHTTPRequest *)request;
 - (void)createGameFailed:(NSString *)answer;
+
+- (void)joinedGameSuccess:(NSDictionary *)dic;
+- (void)moveFromOtherPlayer:(NSDictionary *)dic;
 
 @end

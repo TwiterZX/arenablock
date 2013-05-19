@@ -12,6 +12,4 @@
 
 - (IBAction)action_currentGame:(id)sender;
 
-- (IBAction)action_newGame:(id)sender;
-
 @end
