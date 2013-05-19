@@ -7,9 +7,11 @@
 //
 
 #import "History.h"
+#import "HistoryMove.h"
 
 @implementation History
 
+@synthesize historyMoveArray, historyPieceArray, lastPiece, id_gameCenter;
 
 static  History *_instance = nil;
 
@@ -27,18 +29,19 @@ static  History *_instance = nil;
 - (id)init {
     self = [super init];
     if (self) {
-        historyMove = [NSMutableArray array];
-        historyPiece = [NSMutableArray array];
+        historyMoveArray = [NSMutableArray array];
+        historyPieceArray = [NSMutableArray array];
     }
     return self;
 }
 
 #pragma mark - Method History Movement
 
-- (void)addMoveToHistory:(NSMutableArray *)moveDict forHost:(BOOL)isHost
+- (void)addMoveToHistory:(HistoryMove *)history
 {
-    
+    [self.historyMoveArray addObject:history];
 }
+
 
 - (void)addPieceToHistory:(NSMutableArray *)pieceDict forHost:(BOOL)isHost
 {

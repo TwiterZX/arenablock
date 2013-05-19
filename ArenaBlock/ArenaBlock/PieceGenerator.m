@@ -9,16 +9,14 @@
 #import "PieceGenerator.h"
 #import "Piece.h"
 
-#define kWidthPiece             @"160"
-#define kHeightPiece            @"160"
-#define kSizeBoard              @"640"
+#define kWidthPiece             @"16"
+#define kHeightPiece            @"16"
+#define kSizeBoard              @"64"
 
 #define kKeyForPiece            @"pieces"
-
-#define kImageKeyForPiece       @"piece"
-#define kImageKeyForPiece_end   @"piece_end"
-#define kImageKeyForPiece_start @"piece_start"
-
+#define kImageKeyForPiece       @"caseblanche"
+#define kImageKeyForPiece_end   @"end"
+#define kImageKeyForPiece_start @"start"
 
 #define RAMDOM(a, b) ((arc4random() % (b - a)) + a)
 

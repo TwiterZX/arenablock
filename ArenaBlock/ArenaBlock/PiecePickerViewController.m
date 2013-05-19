@@ -25,12 +25,16 @@
 @synthesize degrees_1, degrees_2, degrees_3;
 @synthesize delegatePicker;
 
+@synthesize arrayPiecesImg;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    arrayPiecesImg = [NSMutableArray arrayWithCapacity:3];
     arrayOfPieces = [NSMutableArray array];
     
+    [self.view setBackgroundColor:[UIColor clearColor]];
     [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
     
     degrees_1 = 270;
@@ -39,7 +43,7 @@
     
     [self initPieces];
     [self initGesture];
-    [self reloadViewPieces];
+    [self reloadViewPiecesAndResetView:0];
     
     for (UIViewController<PiecePickerDelegateProtocol> *vc in [[self parentViewController] childViewControllers]) {
         if ([vc isKindOfClass:[BoardViewController class]])
@@ -50,16 +54,25 @@
 - (void)initPieces
 {
     pieceImg_1.userInteractionEnabled = YES;
+    [pieceImg_1 setBackgroundColor: [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bloc-NOIR"]]];
     pieceImg_1.tag = 0;
-    [pieceImg_1 setContentMode:UIViewContentModeScaleAspectFit];
+    [pieceImg_1 setContentMode:UIViewContentModeCenter];
     
     pieceImg_2.userInteractionEnabled = YES;
     pieceImg_2.tag = 1;
-    [pieceImg_2 setContentMode:UIViewContentModeScaleAspectFit];
+    [pieceImg_2 setBackgroundColor: [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bloc-NOIR"]]];
     
-    [pieceImg_3 setContentMode:UIViewContentModeScaleAspectFit];
+    [pieceImg_2 setContentMode:UIViewContentModeCenter];
+    
+    [pieceImg_3 setContentMode:UIViewContentModeCenter];
+    [pieceImg_3 setBackgroundColor: [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bloc-NOIR"]]];
     pieceImg_3.userInteractionEnabled = YES;
     pieceImg_3.tag = 2;
+    
+    [arrayPiecesImg addObject:pieceImg_1];
+    [arrayPiecesImg addObject:pieceImg_2];
+    [arrayPiecesImg addObject:pieceImg_3];
+    
 }
 
 - (void)initGesture
@@ -99,18 +112,13 @@
             
             [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Push"]  looping:NO];
             
-            // Tells delegate the piece we have chosen
             if (delegatePicker)
                 [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
             
-            
-            //  hMove.isHost = [delegatePicker fetchPlayer1Position]
-            
-            // Reload the pieces array
             [arrayOfPieces removeObjectAtIndex:index];
+            
             [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
-            [self reloadDegreeForIndex:index];
-            [self reloadViewPieces];
+            [self moveDownViewAndReload:[arrayPiecesImg objectAtIndex:index]];
         }
         else {
             
@@ -118,47 +126,76 @@
             UIAlertView *alert  =  [[UIAlertView alloc] initWithTitle:@"TU PEUX PAS JOUER CA MARCHE PAS BOUFON !" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }
-        
-        
     }
 }
+
+- (void)moveDownViewAndReload:(UIImageView *)view
+{
+    
+    [UIView animateWithDuration:0.75
+                          delay:0
+                        options:nil
+                     animations:^{
+                         view.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y+100, view.frame.size.width, view.frame.size.height);
+                     }
+                     completion:^(BOOL finished) {
+                         [self reloadDegreeForIndex:view.tag];
+                         [self reloadViewPiecesAndResetView:view.tag];
+                     }];
+}
+
+
 
 
 - (void)reloadDegreeForIndex:(NSInteger)index
 {
     switch (index) {
         case 0:
+        {
             [pieceImg_1 setNeedsDisplay];
             degrees_1 = 270;
             pieceImg_1.transform = CGAffineTransformIdentity;
-            break;
             
+        }
+            break;
         case 1:
+        {
             [pieceImg_2 setNeedsDisplay];
             degrees_2 = 270;
             pieceImg_2.transform = CGAffineTransformIdentity;
+        }
             break;
             
         case 2:
-            degrees_3 = 270;
+        {
             [pieceImg_3 setNeedsDisplay];
+            degrees_3 = 270;
             pieceImg_3.transform = CGAffineTransformIdentity;
             break;
-            
         default:
             break;
+        }
+            
     }
 }
 
--(void)reloadViewPieces
+-(void)reloadViewPiecesAndResetView:(NSInteger)index
 {
     Piece *p1 = (Piece *)[arrayOfPieces objectAtIndex:0];
     Piece *p2 = (Piece *)[arrayOfPieces objectAtIndex:1];
     Piece *p3 = (Piece *)[arrayOfPieces objectAtIndex:2];
     
+    UIImageView *view = [arrayPiecesImg objectAtIndex:index];
+    [view setFrame:CGRectMake(view.frame.origin.x, 20, view.frame.size.width, view.frame.size.height)];
+    
     [pieceImg_1 setImage:p1.pieceImage];
     [pieceImg_2 setImage:p2.pieceImage];
     [pieceImg_3 setImage:p3.pieceImage];
+    
+    [UIView animateWithDuration:2.5 animations:^(void) {
+        pieceImg_3.alpha = 0;
+        pieceImg_3.alpha = 1;
+    }];
     
 }
 
@@ -204,10 +241,9 @@
             break;
     }
     
-    NSLog(@"degree : %i", degrees_1);
     
     [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Rotate"]  looping:NO];
-
+    
     [self isPieceMovable:p forView:tmpImgView];
 }
 
@@ -220,6 +256,7 @@
         [p setPiecePos:0];
     }
 }
+
 
 
 - (void)didReceiveMemoryWarning

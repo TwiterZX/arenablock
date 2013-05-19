@@ -101,6 +101,7 @@
     
     [hMove setIsHost:self.isHost];
     [hMove setMoveDictionnary:dictionnary];
+    [[History sharedInstance] addMoveToHistory:hMove];
     
     NSLog(@"dictionnary of move : %@", dictionnary);
 }
