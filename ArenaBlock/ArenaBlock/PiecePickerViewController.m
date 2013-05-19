@@ -91,37 +91,36 @@
 -(void)playPiece:(UISwipeGestureRecognizer *)gesture
 {
     if(UIGestureRecognizerStateBegan == gesture.state) {
-        NSInteger index = gesture.view.tag;
-        if ([MoveManager isMovePossible:(Piece *)[arrayOfPieces objectAtIndex:index]]) {
-            
-            [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Push"]  looping:NO];
-           // [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Campain"] looping:YES fadeIn:YES];
+            NSInteger index = gesture.view.tag;
+            CGPoint playerPos = [delegatePicker fetchPlayer1Position];
+            if ([MoveManager isMovePossible:(Piece *)[arrayOfPieces objectAtIndex:index] withPlayerPosition:playerPos]) {
+                
+                [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Push"]  looping:NO];
+               // [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Campain"] looping:YES fadeIn:YES];
 
-        Piece *p = (Piece *)[arrayOfPieces objectAtIndex:index];
-        CGPoint playerPos = [delegatePicker fetchPlayer1Position];
-        if ([MoveManager isMovePossible:p withPlayerPosition:playerPos]) {
-           
-            // Tells delegate the piece we have chosen
-            if (delegatePicker)
-                [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
-            
-            // Reload the pieces array
->>>>>>> fc4ad4c1171e936c7b4d10717d115dc91ecc2d69
-            [arrayOfPieces removeObjectAtIndex:index];
-            [self reloadDegreeForIndex:index];
-            [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
-            [self reloadViewPieces];
-            
-            
-        }
-        else {
-            
-            [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Wrong"]  looping:NO];
+            Piece *p = (Piece *)[arrayOfPieces objectAtIndex:index];
+            if ([MoveManager isMovePossible:p withPlayerPosition:playerPos]) {
+               
+                // Tells delegate the piece we have chosen
+                if (delegatePicker)
+                    [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
+                
+                // Reload the pieces array
+                [arrayOfPieces removeObjectAtIndex:index];
+                [self reloadDegreeForIndex:index];
+                [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
+                [self reloadViewPieces];
+                
+                
+            }
+            else {
+                
+                [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Wrong"]  looping:NO];
 
-            UIAlertView *alert  =  [[UIAlertView alloc] initWithTitle:@"TU PEUX PAS JOUER CA MARCHE PAS BOUFON !" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+                UIAlertView *alert  =  [[UIAlertView alloc] initWithTitle:@"TU PEUX PAS JOUER CA MARCHE PAS BOUFON !" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
         }
-        
     }
 }
 
@@ -143,6 +142,7 @@
             break;
     }
 }
+
 -(void)reloadViewPieces
 {
     Piece *p1 = (Piece *)[arrayOfPieces objectAtIndex:0];
@@ -204,13 +204,6 @@
     [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Rotate"]  looping:NO];
 
     [self isPieceMovable:p forView:tmpImgView];
-<<<<<<< HEAD
-=======
-    
-//    NSLog(@"position : %i", p.piecePos);
-//    
-//    NSLog(@"degrees_1 : %f", degrees_1);
->>>>>>> fc4ad4c1171e936c7b4d10717d115dc91ecc2d69
 }
 
 - (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos

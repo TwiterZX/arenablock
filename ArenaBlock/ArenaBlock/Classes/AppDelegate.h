@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "SoundManager.h"
+@class Sound;
 
 #define appDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
