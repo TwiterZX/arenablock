@@ -15,6 +15,7 @@
 @interface MoveManager : NSObject
 
 
-+ (BOOL)isMovePossible:(Piece *)p;
++ (BOOL)isMovePossible:(Piece *)p withPlayerPosition:(CGPoint)playerPosition;
++ (NSArray *)getPathAccordingToPiece:(NSArray *)coordinate andPlayerPosition:(CGPoint)playerPos;
 
 @end

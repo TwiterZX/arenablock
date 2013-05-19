@@ -6,11 +6,13 @@
 //  Copyright (c) 2013 beMyApp. All rights reserved.
 //
 
-#import "PiecePickerViewController.h"
 #import "PieceGenerator.h"
 #import "Piece.h"
 #import "MoveManager.h"
 #import "AppDelegate.h"
+#import "BoardViewController.h"
+
+#import "PiecePickerViewController.h"
 
 @interface PiecePickerViewController ()
 
@@ -20,6 +22,7 @@
 
 @synthesize pieceImg_1, pieceImg_2, pieceImg_3, arrayOfPieces;
 @synthesize degrees_1, degrees_2, degrees_3;
+@synthesize delegatePicker;
 
 - (void)viewDidLoad
 {
@@ -37,6 +40,10 @@
     [self initGesture];
     [self reloadViewPieces];
     
+    for (UIViewController<PiecePickerDelegateProtocol> *vc in [[self parentViewController] childViewControllers]) {
+        if ([vc isKindOfClass:[BoardViewController class]])
+            self.delegatePicker = vc;
+    }
 }
 
 - (void)initPieces
@@ -90,6 +97,16 @@
             [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Push"]  looping:NO];
            // [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Campain"] looping:YES fadeIn:YES];
 
+        Piece *p = (Piece *)[arrayOfPieces objectAtIndex:index];
+        CGPoint playerPos = [delegatePicker fetchPlayer1Position];
+        if ([MoveManager isMovePossible:p withPlayerPosition:playerPos]) {
+           
+            // Tells delegate the piece we have chosen
+            if (delegatePicker)
+                [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
+            
+            // Reload the pieces array
+>>>>>>> fc4ad4c1171e936c7b4d10717d115dc91ecc2d69
             [arrayOfPieces removeObjectAtIndex:index];
             [self reloadDegreeForIndex:index];
             [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
@@ -187,6 +204,13 @@
     [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Rotate"]  looping:NO];
 
     [self isPieceMovable:p forView:tmpImgView];
+<<<<<<< HEAD
+=======
+    
+//    NSLog(@"position : %i", p.piecePos);
+//    
+//    NSLog(@"degrees_1 : %f", degrees_1);
+>>>>>>> fc4ad4c1171e936c7b4d10717d115dc91ecc2d69
 }
 
 - (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos

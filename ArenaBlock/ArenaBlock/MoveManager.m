@@ -11,10 +11,8 @@
 
 @implementation MoveManager
 
-+ (BOOL)isMovePossible:(Piece *)p
++ (BOOL)isMovePossible:(Piece *)p withPlayerPosition:(CGPoint)playerPosition
 {
-    CGPoint playerPosition = CGPointMake(0, 3);
-    
     CGPoint departurePos = CGPointFromString([[[p.pieceDict valueForKey:@"pieces"] objectAtIndex:p.piecePos] objectAtIndex:0]);
     NSInteger arrival = [[[p.pieceDict valueForKey:@"pieces"] objectAtIndex:p.piecePos] count];
                          
@@ -26,6 +24,26 @@
         return NO;
     
     return YES;
+}
+
++ (NSArray *)getPathAccordingToPiece:(NSArray *)coordinate andPlayerPosition:(CGPoint)playerPos
+{
+    CGPoint playerPosition = playerPos;
+    NSMutableArray *arraOfCoor = [NSMutableArray array];
+
+    CGPoint departurePos = CGPointFromString([coordinate objectAtIndex:0]);
+    
+    for (NSString *coordinateStr in coordinate) {
+        
+        DLog(@"Coordinate str %@ ", coordinateStr)
+        CGPoint arrivalPos = CGPointFromString(coordinateStr);
+        
+        CGPoint newPos = CGPointMake(playerPosition.x - departurePos.x, playerPosition.y - departurePos.y);
+        
+        newPos = CGPointMake(newPos.x + arrivalPos.x, newPos.y + arrivalPos.y);
+        [arraOfCoor addObject:NSStringFromCGPoint(newPos)];
+    }
+    return arraOfCoor;
 }
 
 @end
