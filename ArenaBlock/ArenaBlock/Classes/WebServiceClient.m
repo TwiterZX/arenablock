@@ -115,7 +115,7 @@ static WebServiceClient *_instance = nil;
     if (_isInternetAvailable == TRUE)
     {
         #warning - This is a test
-        [self createGameWithPlayer1:42 player2:4242];
+        [self createGameWithPlayer1:43 player2:4343];
     }
 }
 
@@ -146,18 +146,13 @@ static WebServiceClient *_instance = nil;
 - (void)createGameSuccess:(ASIHTTPRequest *)request
 {
     NSString *answer = [request responseString];
-    NSDictionary *res = [answer JSONValue];
+    NSInteger res = [answer intValue];
 
-    DLog(@"Resultat %@", res);
-    if([[res objectForKey:@"code"] intValue] == WSCodeSuccess)
+    DLog(@"res %@", answer);
+    if (res == TRUE)
     {
         if (_wsdelegate)
             [_wsdelegate createGameSuccess:request];
-    }
-    else
-    {
-        if (_wsdelegate)
-            [_wsdelegate createGameFailed:@"Vous n'êtes pas authorisé à créer une session de jeu."];
     }
 }
 
