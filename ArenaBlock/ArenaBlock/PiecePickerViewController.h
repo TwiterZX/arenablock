@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SoundManager.h"
+
 
 @interface PiecePickerViewController : UIViewController <UIGestureRecognizerDelegate>
 

@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SoundManager.h"
+
+#define appDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
 
+@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) NSMutableDictionary *bankOfSound;
+@property (nonatomic, strong) Sound *s;
 @end

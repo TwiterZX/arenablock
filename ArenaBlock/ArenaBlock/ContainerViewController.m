@@ -7,6 +7,7 @@
 //
 
 #import "ContainerViewController.h"
+#import "AppDelegate.h"
 
 @interface ContainerViewController ()
 
@@ -18,7 +19,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Jungle"]  looping:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,6 +10,7 @@
 #import "PieceGenerator.h"
 #import "Piece.h"
 #import "MoveManager.h"
+#import "AppDelegate.h"
 
 @interface PiecePickerViewController ()
 
@@ -23,7 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     arrayOfPieces = [NSMutableArray array];
     
     [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
@@ -31,7 +32,7 @@
     degrees_1 = 270;
     degrees_2 = 270;
     degrees_3 = 270;
-
+    
     [self initPieces];
     [self initGesture];
     [self reloadViewPieces];
@@ -85,18 +86,29 @@
     if(UIGestureRecognizerStateBegan == gesture.state) {
         NSInteger index = gesture.view.tag;
         if ([MoveManager isMovePossible:(Piece *)[arrayOfPieces objectAtIndex:index]]) {
+            
+            [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Push"]  looping:NO];
+           // [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Campain"] looping:YES fadeIn:YES];
+
             [arrayOfPieces removeObjectAtIndex:index];
             [self reloadDegreeForIndex:index];
             [[PieceGenerator sharedInstance] fillArray:arrayOfPieces limit:3];
             [self reloadViewPieces];
+            
+            
         }
         else {
+            
+            [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Wrong"]  looping:NO];
+
             UIAlertView *alert  =  [[UIAlertView alloc] initWithTitle:@"TU PEUX PAS JOUER CA MARCHE PAS BOUFON !" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }
-       
+        
     }
 }
+
+
 
 - (void)reloadDegreeForIndex:(NSInteger)index
 {
@@ -119,27 +131,29 @@
     Piece *p1 = (Piece *)[arrayOfPieces objectAtIndex:0];
     Piece *p2 = (Piece *)[arrayOfPieces objectAtIndex:1];
     Piece *p3 = (Piece *)[arrayOfPieces objectAtIndex:2];
-
+    
     [pieceImg_1 setImage:p1.pieceImage];
     [pieceImg_2 setImage:p2.pieceImage];
     [pieceImg_3 setImage:p3.pieceImage];
-
+    
+    
+    
     //
-//    [self isPieceMovable:p1 forView:pieceImg_1];
-//    [self isPieceMovable:p2 forView:pieceImg_2];
-//    [self isPieceMovable:p3 forView:pieceImg_3];
+    //    [self isPieceMovable:p1 forView:pieceImg_1];
+    //    [self isPieceMovable:p2 forView:pieceImg_2];
+    //    [self isPieceMovable:p3 forView:pieceImg_3];
     
 }
 
 - (void)isPieceMovable:(Piece *)p forView:(UIImageView *)view
 {
-//    NSLog(@"PIECE : %@", p);
-//    if ([MoveManager isMovePossible:p]) {
-//        [view setAlpha:1];
-//    }
-//    else {
-//        [view setAlpha:0.5];
-//    }
+    //    NSLog(@"PIECE : %@", p);
+    //    if ([MoveManager isMovePossible:p]) {
+    //        [view setAlpha:1];
+    //    }
+    //    else {
+    //        [view setAlpha:0.5];
+    //    }
 }
 
 - (void)rotate:(UIGestureRecognizer *)sender
@@ -170,12 +184,9 @@
         default:
             break;
     }
-    
+    [[SoundManager sharedManager] playMusic:[appDelegate.bankOfSound valueForKey:@"Rotate"]  looping:NO];
+
     [self isPieceMovable:p forView:tmpImgView];
-    
-    NSLog(@"position : %i", p.piecePos);
-    
-    NSLog(@"degrees_1 : %f", degrees_1);
 }
 
 - (void)setPositionOfPiece:(Piece *)p currentPos:(NSInteger)currentPos
