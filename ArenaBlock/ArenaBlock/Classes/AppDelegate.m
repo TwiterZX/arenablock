@@ -20,8 +20,6 @@
 
 - (void)initAllSounds
 {
-    
-
     bankOfSound = [NSMutableDictionary dictionary];
     
     NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Jungle.wav", [[NSBundle mainBundle] resourcePath]]];

@@ -22,9 +22,10 @@
 
 @interface PiecePickerViewController : UIViewController <UIGestureRecognizerDelegate>
 
-@property CGFloat degrees_1;
-@property CGFloat degrees_2;
-@property CGFloat degrees_3;
+@property int degrees_1;
+@property int degrees_2;
+@property int degrees_3;
+
 
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_1;
 @property (nonatomic, weak) IBOutlet UIImageView *pieceImg_2;
