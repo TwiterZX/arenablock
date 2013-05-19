@@ -126,17 +126,19 @@
             degrees_1 = 270;
             pieceImg_1.transform = CGAffineTransformIdentity;
             break;
-            
+    
         case 1:
             [pieceImg_2 setNeedsDisplay];
             degrees_2 = 270;
             pieceImg_2.transform = CGAffineTransformIdentity;
             break;
+            
         case 2:
             degrees_3 = 270;
             [pieceImg_3 setNeedsDisplay];
             pieceImg_3.transform = CGAffineTransformIdentity;
             break;
+            
         default:
             break;
     }
