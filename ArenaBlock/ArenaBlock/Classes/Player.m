@@ -11,7 +11,11 @@
 #import "MCSpriteLayer.h"
 #import "Player.h"
 
+#import "HistoryMove.h"
+#import "History.h"
+
 @implementation Player
+
 
 #define SIZE_CUBE   80  // half of a case
 #define WIDTH_SPRITE    80.0
@@ -54,17 +58,26 @@
     return position;
 }
 
+- (BOOL)isHost {
+    return isHost;
+}
+
 #pragma mark - Move player
 
 - (void)movePlayerWithPiece:(Piece *)p {
 
+    
+    
     // Generate animation
     NSArray *pp = [[p.pieceDict objectForKey:@"pieces"] objectAtIndex:p.piecePos];
     NSArray *ppConverted = [MoveManager getPathAccordingToPiece:pp andPlayerPosition:position];
     NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *arrayMovement = [NSMutableArray array];
+
     for (int i = 0, end = [ppConverted count]; i < end; i++) {
         NSString *s = [ppConverted objectAtIndex:i];
         [array addObject:[self animateMovePlayerToPoint:CGPointFromString(s)]];
+        [arrayMovement addObject:s];
     }
 
     // Animate whole group
@@ -76,6 +89,20 @@
     [_spritePlayer addAnimation:group forKey:@"allMyAnimations"];
     
     DLog(@"End move %@", NSStringFromCGPoint(_spritePlayer.position));
+    
+    
+    // record movement
+    
+    HistoryMove *hMove = [[HistoryMove alloc] init];
+    
+    NSLog(@"move : %@", [[p.pieceDict objectForKey:@"pieces"] objectAtIndex:p.piecePos]);
+    NSDictionary *dictionnary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                           @"move", arrayMovement,  nil];
+    
+    [hMove setIsHost:self.isHost];
+    [hMove setMoveDictionnary:dictionnary];
+    
+    NSLog(@"dictionnary of move : %@", dictionnary);
 }
 
 - (CABasicAnimation *)animateMovePlayerToPoint:(CGPoint)point {

@@ -18,7 +18,8 @@
 @interface Player : NSObject {
     NSInteger   idP;
     CGPoint position;
-    
+    BOOL isHost;
+
     NSMutableArray *_arrayPieces;
     MCSpriteLayer *_spritePlayer;
     
@@ -30,4 +31,5 @@
 
 - (CGPoint)position;
 
+- (BOOL)isHost;
 @end

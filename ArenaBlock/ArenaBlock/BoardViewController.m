@@ -26,6 +26,7 @@
     
     // Init player
     player1 = [[Player alloc] initWithDelegate:self];
+//    player1.isHost = YES;
 }
 
 - (void)didReceiveMemoryWarning

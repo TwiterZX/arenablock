@@ -11,8 +11,9 @@
 #import "MoveManager.h"
 #import "AppDelegate.h"
 #import "BoardViewController.h"
-
 #import "PiecePickerViewController.h"
+
+
 
 @interface PiecePickerViewController ()
 
@@ -101,6 +102,9 @@
             // Tells delegate the piece we have chosen
             if (delegatePicker)
                 [delegatePicker piecePickerDelegatePlayerPlayedPiece:p];
+            
+            
+          //  hMove.isHost = [delegatePicker fetchPlayer1Position]
             
             // Reload the pieces array
             [arrayOfPieces removeObjectAtIndex:index];
